@@ -1,5 +1,9 @@
+import type { ReactNode } from 'react'
+
 import type { Metadata } from 'next'
 import { Lora, Geist } from 'next/font/google'
+import { Analytics } from '@vercel/analytics/next'
+import { SpeedInsights } from '@vercel/speed-insights/next'
 
 import './globals.css'
 
@@ -24,13 +28,17 @@ export const metadata: Metadata = {
   },
 }
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html
       lang="en"
-      className={`${lora.variable} ${geist.variable} h-full antialiased`}
+      className={`${lora.variable} ${geist.variable} h-full`}
     >
-      <body className="min-h-full flex flex-col bg-[#010101] text-white">{children}</body>
+      <body className="min-h-full flex flex-col antialiased">
+        {children}
+        <Analytics />
+        <SpeedInsights />
+      </body>
     </html>
   )
 }

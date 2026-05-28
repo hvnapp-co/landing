@@ -1,10 +1,13 @@
 'use client'
 
+import type { CSSProperties } from 'react'
+
 type FeedbackButtonProps = {
   className?: string,
+  style?: CSSProperties,
 }
 
-export const FeedbackButton = ({ className }: FeedbackButtonProps) => {
+export const FeedbackButton = ({ className, style }: FeedbackButtonProps) => {
   const handleFeedback = () => {
     const subject = encodeURIComponent('Bug Report — Haven App')
     const body = encodeURIComponent(
@@ -14,7 +17,11 @@ export const FeedbackButton = ({ className }: FeedbackButtonProps) => {
   }
 
   return (
-    <button onClick={handleFeedback} className={className}>
+    <button
+      onClick={handleFeedback}
+      className={className}
+      style={style}
+    >
       Report a bug →
     </button>
   )

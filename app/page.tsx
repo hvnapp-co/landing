@@ -1,5 +1,7 @@
+import Image from 'next/image'
 import { FaApple, FaGooglePlay } from 'react-icons/fa'
 
+import { AnimateIn } from './components/AnimateIn'
 import { FeedbackButton } from './components/FeedbackButton'
 
 type SocialLinkProps = {
@@ -9,6 +11,7 @@ type SocialLinkProps = {
 }
 
 type ShelfCardProps = {
+  accent: string,
   symbol: string,
   title: string,
   body: string,
@@ -135,213 +138,349 @@ const SocialLink = ({ href, label, children }: SocialLinkProps) => (
     aria-label={label}
     target="_blank"
     rel="noopener noreferrer"
-    className="text-white/35 hover:text-white transition-colors duration-200"
+    className="transition-opacity duration-200 hover:opacity-100"
+    style={{ color: 'var(--faint)' }}
   >
     {children}
   </a>
 )
 
-const ShelfCard = ({ symbol, title, body }: ShelfCardProps) => (
-  <div className="rounded-2xl border border-white/[0.07] bg-white/[0.03] p-8 hover:border-[#10b981]/25 hover:bg-white/[0.05] transition-all duration-300">
-    <span className="text-[#10b981] text-2xl leading-none">{symbol}</span>
-    <h3 className="font-serif font-semibold text-xl text-white mt-5 mb-3">{title}</h3>
-    <p className="text-white/50 text-[0.9375rem] leading-relaxed">{body}</p>
+const ShelfCard = ({ accent, symbol, title, body }: ShelfCardProps) => (
+  <div
+    className="rounded-2xl border p-8 relative overflow-hidden transition-all duration-300"
+    style={{ background: 'var(--surface)', borderColor: 'var(--trim)' }}
+  >
+    <div
+      className="absolute top-0 left-0 right-0 h-[3px]"
+      style={{ background: accent }}
+    />
+    <span
+      className="text-2xl leading-none"
+      style={{ color: accent }}
+    >
+      {symbol}
+    </span>
+    <h3
+      className="font-serif font-semibold text-xl mt-5 mb-3"
+      style={{ color: 'var(--foreground)' }}
+    >
+      {title}
+    </h3>
+    <p
+      className="text-[0.9375rem] leading-relaxed"
+      style={{ color: 'var(--muted)' }}
+    >
+      {body}
+    </p>
   </div>
 )
 
 const FeatureCard = ({ icon, title, body }: FeatureCardProps) => (
-  <div className="rounded-2xl border border-white/[0.07] bg-white/[0.03] p-10">
+  <div
+    className="rounded-2xl border p-10"
+    style={{ background: 'var(--surface)', borderColor: 'var(--trim)' }}
+  >
     <div className="w-10 h-10 rounded-xl bg-[#10b981]/10 border border-[#10b981]/20 flex items-center justify-center text-[#10b981] mb-7">
       {icon}
     </div>
-    <h3 className="font-serif font-semibold text-2xl text-white mb-3 tracking-tight">{title}</h3>
-    <p className="text-white/50 text-[0.9375rem] leading-relaxed">{body}</p>
+    <h3
+      className="font-serif font-semibold text-2xl mb-3 tracking-tight"
+      style={{ color: 'var(--foreground)' }}
+    >
+      {title}
+    </h3>
+    <p
+      className="text-[0.9375rem] leading-relaxed"
+      style={{ color: 'var(--muted)' }}
+    >
+      {body}
+    </p>
   </div>
 )
 
 export default function Home() {
   return (
-    <div className="flex flex-col min-h-screen bg-[#010101]">
+    <div className="flex flex-col min-h-screen">
 
-      <main className="flex-1">
+      <section className="relative min-h-screen overflow-hidden">
+        <Image
+          src="/hero.svg"
+          alt="A beautiful library — the setting for Haven"
+          fill
+          priority
+          unoptimized
+          className="object-cover"
+          style={{ objectPosition: 'center 50%' }}
+        />
 
-        <section className="relative overflow-hidden">
-          <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_55%_at_50%_-5%,rgba(16,185,129,0.13),transparent)] pointer-events-none" />
+        <div className="absolute inset-0 bg-black/55" />
 
-          <div className="max-w-4xl mx-auto px-6 pt-28 pb-32 text-center">
-            <div className="animate-fade-up">
-              <span className="inline-block text-xs font-semibold text-[#10b981] tracking-[0.2em] uppercase mb-7">
-                Now available
-              </span>
-            </div>
-
-            <h1 className="animate-fade-up-1 font-serif font-bold text-5xl md:text-7xl text-white leading-[1.06] tracking-tight">
-              Your library,<br />your sanctuary.
-            </h1>
-
-            <p className="animate-fade-up-2 mt-6 text-lg md:text-xl text-white/55 max-w-lg mx-auto leading-relaxed">
-              Haven is a personal book library for iOS and Android. Curate what you've read, what you're reading, and everything waiting on your shelf — beautifully.
-            </p>
-
-            <div
-              id="download"
-              className="animate-fade-up-3 mt-10 flex flex-col sm:flex-row gap-3 justify-center items-center"
-            >
-              <a
-                href="#"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-3 px-6 py-3.5 rounded-full bg-white text-black text-sm font-semibold hover:bg-white/90 transition-colors duration-200 w-full sm:w-auto justify-center"
-              >
-                <FaApple size={15} />
-                Download on iOS
-              </a>
-              <a
-                href="#"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-3 px-6 py-3.5 rounded-full border border-white/20 text-white text-sm font-semibold hover:bg-white/[0.06] transition-colors duration-200 w-full sm:w-auto justify-center"
-              >
-                <FaGooglePlay size={14} />
-                Get it on Android
-              </a>
-            </div>
-          </div>
-        </section>
-
-        <section className="border-y border-white/[0.06] bg-white/[0.02]">
-          <div className="max-w-2xl mx-auto px-6 py-20 text-center">
-            <h2 className="font-serif font-semibold text-3xl md:text-4xl text-white leading-snug tracking-tight">
-              Books deserve better<br />than a notes app.
-            </h2>
-            <p className="mt-5 text-white/55 text-lg leading-relaxed">
-              You've been tracking reads in Notion, Instagram saves, or just memory. Haven was built for this — a single home for every book that's shaped you, and every one still waiting.
-            </p>
-          </div>
-        </section>
-
-        <section className="max-w-6xl mx-auto px-6 py-24">
-          <div className="text-center mb-14">
-            <h2 className="font-serif font-bold text-4xl text-white tracking-tight">
-              Your shelf, three ways.
-            </h2>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <ShelfCard
-              symbol="○"
-              title="Want to Read"
-              body="Never lose a recommendation again. Add by scan or search — it waits until you're ready."
-            />
-            <ShelfCard
-              symbol="◑"
-              title="Reading"
-              body="Track what's in your hands right now. Your shelf knows exactly where you are."
-            />
-            <ShelfCard
-              symbol="●"
-              title="Read"
-              body="Every book you've finished, kept forever. Your history. Your story."
-            />
-          </div>
-        </section>
-
-        <section className="max-w-6xl mx-auto px-6 py-24 border-t border-white/[0.06]">
-          <div className="text-center mb-14">
-            <h2 className="font-serif font-bold text-4xl text-white tracking-tight">
-              Add books, your way.
-            </h2>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-            <FeatureCard
-              icon={<ScanIcon />}
-              title="Point. Tap. Done."
-              body="Scan any book's ISBN barcode and Haven pulls the title, author, cover, and synopsis instantly. No typing, no searching — just add."
-            />
-            <FeatureCard
-              icon={<SearchIcon />}
-              title="Find any book, instantly."
-              body="Search by title, author, or keyword. Browse results and add directly to your library in one tap."
-            />
-          </div>
-        </section>
-
-        <section className="max-w-6xl mx-auto px-6 py-8 pb-24">
-          <div className="rounded-3xl border border-[#10b981]/20 bg-[#10b981]/[0.04] p-12 md:p-16 text-center relative overflow-hidden">
-            <div className="absolute inset-0 bg-[radial-gradient(ellipse_60%_60%_at_50%_110%,rgba(16,185,129,0.09),transparent)] pointer-events-none" />
-
-            <span className="inline-block text-xs font-semibold text-[#10b981] tracking-[0.2em] uppercase mb-5">
-              Coming soon
+        <div className="relative z-10 flex flex-col items-center justify-center min-h-screen text-center px-6 pb-16 pt-24">
+          <div className="animate-fade-up">
+            <span className="inline-block text-xs font-semibold text-[#10b981] tracking-[0.2em] uppercase mb-7">
+              Now available
             </span>
-            <h2 className="font-serif font-bold text-4xl text-white tracking-tight mb-4">
-              Reading is better together.
-            </h2>
-            <p className="text-white/55 text-lg max-w-md mx-auto leading-relaxed mb-9">
-              Reading goals, friend activity, and shared shelves are on the way. Haven is just getting started.
-            </p>
+          </div>
+
+          <h1 className="animate-fade-up-1 font-serif font-bold text-5xl md:text-7xl text-white leading-[1.06] tracking-tight">
+            Your library,<br />your sanctuary.
+          </h1>
+
+          <p className="animate-fade-up-2 mt-6 text-lg md:text-xl text-white/70 max-w-lg mx-auto leading-relaxed">
+            Haven is a personal book library for iOS and Android. Curate what you've read, what you're reading, and everything waiting on your shelf — beautifully.
+          </p>
+
+          <div className="animate-fade-up-3 mt-10 flex flex-col sm:flex-row gap-3 justify-center items-center">
             <a
               href="#"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2.5 px-6 py-3 rounded-full border border-[#10b981]/35 text-[#10b981] text-sm font-semibold hover:bg-[#10b981]/10 transition-colors duration-200"
+              className="flex items-center gap-3 px-6 py-3.5 rounded-full bg-white text-black text-sm font-semibold hover:bg-white/90 transition-colors duration-200 w-full sm:w-auto justify-center"
             >
-              <DiscordIcon />
-              Join the Discord
+              <FaApple size={15} />
+              Download on iOS
             </a>
+            <a
+              href="#"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-3 px-6 py-3.5 rounded-full border border-white/30 text-white text-sm font-semibold hover:bg-white/10 transition-colors duration-200 w-full sm:w-auto justify-center"
+            >
+              <FaGooglePlay size={14} />
+              Get it on Android
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <main>
+
+        <section
+          className="border-y"
+          style={{ background: 'var(--canvas)', borderColor: 'var(--trim)' }}
+        >
+          <AnimateIn>
+            <div className="max-w-2xl mx-auto px-6 py-20 text-center">
+              <h2
+                className="font-serif font-semibold text-3xl md:text-4xl leading-snug tracking-tight"
+                style={{ color: 'var(--foreground)' }}
+              >
+                Books deserve better<br />than a notes app.
+              </h2>
+              <p
+                className="mt-5 text-lg leading-relaxed"
+                style={{ color: 'var(--muted)' }}
+              >
+                You've been tracking reads in Notion, Instagram saves, or just memory. Haven was built for this — a single home for every book that's shaped you, and every one still waiting.
+              </p>
+            </div>
+          </AnimateIn>
+        </section>
+
+        <section className="max-w-6xl mx-auto px-6 py-24">
+          <AnimateIn>
+            <div className="text-center mb-14">
+              <h2
+                className="font-serif font-bold text-4xl tracking-tight"
+                style={{ color: 'var(--foreground)' }}
+              >
+                Your shelf, three ways.
+              </h2>
+            </div>
+          </AnimateIn>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <AnimateIn delay={0}>
+              <ShelfCard
+                accent="#10b981"
+                symbol="○"
+                title="Want to Read"
+                body="Never lose a recommendation again. Add by scan or search — it waits until you're ready."
+              />
+            </AnimateIn>
+            <AnimateIn delay={90}>
+              <ShelfCard
+                accent="#10b981"
+                symbol="◑"
+                title="Reading"
+                body="Track what's in your hands right now. Your shelf knows exactly where you are."
+              />
+            </AnimateIn>
+            <AnimateIn delay={180}>
+              <ShelfCard
+                accent="#10b981"
+                symbol="●"
+                title="Read"
+                body="Every book you've finished, kept forever. Your history. Your story."
+              />
+            </AnimateIn>
           </div>
         </section>
 
-        <section className="border-y border-white/[0.06] bg-white/[0.02]">
-          <div className="max-w-2xl mx-auto px-6 py-20 text-center">
-            <h2 className="font-serif font-semibold text-3xl text-white tracking-tight mb-4">
-              Built by a reader, for readers.
-            </h2>
-            <p className="text-white/55 text-base leading-relaxed">
-              Haven started as a personal project — a better way to keep track of books. No VC, no roadmap committee. Just a love for good reads and good software.
-            </p>
+        <section
+          className="border-y"
+          style={{ background: 'var(--canvas)', borderColor: 'var(--trim)' }}
+        >
+          <div className="max-w-6xl mx-auto px-6 py-24">
+            <AnimateIn>
+              <div className="text-center mb-14">
+                <h2
+                  className="font-serif font-bold text-4xl tracking-tight"
+                  style={{ color: 'var(--foreground)' }}
+                >
+                  Add books, your way.
+                </h2>
+              </div>
+            </AnimateIn>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+              <AnimateIn delay={0}>
+                <FeatureCard
+                  icon={<ScanIcon />}
+                  title="Point. Tap. Done."
+                  body="Scan any book's ISBN barcode and Haven pulls the title, author, cover, and synopsis instantly. No typing, no searching — just add."
+                />
+              </AnimateIn>
+              <AnimateIn delay={100}>
+                <FeatureCard
+                  icon={<SearchIcon />}
+                  title="Find any book, instantly."
+                  body="Search by title, author, or keyword. Browse results and add directly to your library in one tap."
+                />
+              </AnimateIn>
+            </div>
           </div>
         </section>
 
         <section className="max-w-6xl mx-auto px-6 py-24">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div className="rounded-2xl border border-white/[0.07] bg-white/[0.03] p-8">
-              <h3 className="font-serif font-semibold text-xl text-white mb-2">
-                Found something broken?
-              </h3>
-              <p className="text-white/50 text-[0.9375rem] leading-relaxed mb-7">
-                We want to know before you close the app. Send us a report and we'll look into it.
-              </p>
-              <FeedbackButton
-                className="flex items-center gap-2 px-5 py-2.5 rounded-full border border-white/15 text-white/60 text-sm font-medium hover:text-white hover:border-white/35 transition-colors duration-200 cursor-pointer"
-              />
-            </div>
+          <AnimateIn>
+            <div className="rounded-3xl border border-[#10b981]/20 bg-[#10b981]/[0.04] p-12 md:p-16 text-center relative overflow-hidden">
+              <div className="absolute inset-0 bg-[radial-gradient(ellipse_60%_60%_at_50%_110%,rgba(16,185,129,0.10),transparent)] pointer-events-none" />
 
-            <div className="rounded-2xl border border-white/[0.07] bg-white/[0.03] p-8">
-              <h3 className="font-serif font-semibold text-xl text-white mb-2">
-                Have a question?
-              </h3>
-              <p className="text-white/50 text-[0.9375rem] leading-relaxed mb-7">
-                Feedback, ideas, or just want to say hi. We're building this with you.
+              <span className="inline-block text-xs font-semibold text-[#10b981] tracking-[0.2em] uppercase mb-5">
+                Coming soon
+              </span>
+              <h2
+                className="font-serif font-bold text-4xl tracking-tight mb-4"
+                style={{ color: 'var(--foreground)' }}
+              >
+                Reading is better together.
+              </h2>
+              <p
+                className="text-lg max-w-md mx-auto leading-relaxed mb-9"
+                style={{ color: 'var(--muted)' }}
+              >
+                Reading goals, friend activity, and shared shelves are on the way. Haven is just getting started.
               </p>
               <a
-                href="mailto:founder@hvnapp.co"
-                className="flex items-center gap-2 px-5 py-2.5 rounded-full border border-white/15 text-white/60 text-sm font-medium hover:text-white hover:border-white/35 transition-colors duration-200 w-fit"
+                href="#"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2.5 px-6 py-3 rounded-full border border-[#10b981]/35 text-[#10b981] text-sm font-semibold hover:bg-[#10b981]/10 transition-colors duration-200"
               >
-                Contact support →
+                <DiscordIcon />
+                Join the Discord
               </a>
             </div>
+          </AnimateIn>
+        </section>
+
+        <section
+          className="border-y"
+          style={{ background: 'var(--canvas)', borderColor: 'var(--trim)' }}
+        >
+          <AnimateIn>
+            <div className="max-w-2xl mx-auto px-6 py-20 text-center">
+              <h2
+                className="font-serif font-semibold text-3xl tracking-tight mb-4"
+                style={{ color: 'var(--foreground)' }}
+              >
+                Built by a reader, for readers.
+              </h2>
+              <p
+                className="text-base leading-relaxed"
+                style={{ color: 'var(--muted)' }}
+              >
+                Haven started as a personal project — a better way to keep track of books. No VC, no roadmap committee. Just a love for good reads and good software.
+              </p>
+            </div>
+          </AnimateIn>
+        </section>
+
+        <section className="max-w-6xl mx-auto px-6 py-24">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <AnimateIn delay={0}>
+              <div
+                className="rounded-2xl border p-8"
+                style={{ background: 'var(--surface)', borderColor: 'var(--trim)' }}
+              >
+                <h3
+                  className="font-serif font-semibold text-xl mb-2"
+                  style={{ color: 'var(--foreground)' }}
+                >
+                  Found something broken?
+                </h3>
+                <p
+                  className="text-[0.9375rem] leading-relaxed mb-7"
+                  style={{ color: 'var(--muted)' }}
+                >
+                  We want to know before you close the app. Send us a report and we'll look into it.
+                </p>
+                <FeedbackButton
+                  className="flex items-center gap-2 px-5 py-2.5 rounded-full border text-sm font-medium transition-colors duration-200 cursor-pointer"
+                  style={{ borderColor: 'var(--trim)', color: 'var(--muted)' }}
+                />
+              </div>
+            </AnimateIn>
+
+            <AnimateIn delay={100}>
+              <div
+                className="rounded-2xl border p-8"
+                style={{ background: 'var(--surface)', borderColor: 'var(--trim)' }}
+              >
+                <h3
+                  className="font-serif font-semibold text-xl mb-2"
+                  style={{ color: 'var(--foreground)' }}
+                >
+                  Have a question?
+                </h3>
+                <p
+                  className="text-[0.9375rem] leading-relaxed mb-7"
+                  style={{ color: 'var(--muted)' }}
+                >
+                  Feedback, ideas, or just want to say hi. We're building this with you.
+                </p>
+                <a
+                  href="mailto:founder@hvnapp.co"
+                  className="flex items-center gap-2 px-5 py-2.5 rounded-full border text-sm font-medium transition-colors duration-200 w-fit"
+                  style={{ borderColor: 'var(--trim)', color: 'var(--muted)' }}
+                >
+                  Contact support →
+                </a>
+              </div>
+            </AnimateIn>
           </div>
         </section>
 
       </main>
 
-      <footer className="border-t border-white/[0.06]">
+      <footer
+        className="border-t"
+        style={{ background: 'var(--canvas)', borderColor: 'var(--trim)' }}
+      >
         <div className="max-w-6xl mx-auto px-6 py-12">
           <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-8">
             <div>
-              <span className="font-serif font-bold text-lg text-white tracking-tight">Haven</span>
-              <p className="mt-1 text-white/35 text-sm max-w-xs">
+              <span
+                className="font-serif font-bold text-lg tracking-tight"
+                style={{ color: 'var(--foreground)' }}
+              >
+                Haven
+              </span>
+              <p
+                className="mt-1 text-sm max-w-xs"
+                style={{ color: 'var(--faint)' }}
+              >
                 A digital sanctuary for your books.
               </p>
             </div>
@@ -368,24 +507,35 @@ export default function Home() {
             </div>
           </div>
 
-          <div className="mt-8 pt-8 border-t border-white/[0.06] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-            <p className="text-white/25 text-sm">© 2026 Haven. All rights reserved.</p>
+          <div
+            className="mt-8 pt-8 border-t flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4"
+            style={{ borderColor: 'var(--trim)' }}
+          >
+            <p
+              className="text-sm"
+              style={{ color: 'var(--faint)' }}
+            >
+              © 2026 Haven. All rights reserved.
+            </p>
             <div className="flex items-center gap-6">
               <a
                 href="#"
-                className="text-white/25 hover:text-white/55 text-sm transition-colors duration-200"
+                className="text-sm transition-colors duration-200"
+                style={{ color: 'var(--faint)' }}
               >
                 Privacy Policy
               </a>
               <a
                 href="#"
-                className="text-white/25 hover:text-white/55 text-sm transition-colors duration-200"
+                className="text-sm transition-colors duration-200"
+                style={{ color: 'var(--faint)' }}
               >
                 Terms of Use
               </a>
               <a
                 href="mailto:founder@hvnapp.co"
-                className="text-white/25 hover:text-white/55 text-sm transition-colors duration-200"
+                className="text-sm transition-colors duration-200"
+                style={{ color: 'var(--faint)' }}
               >
                 founder@hvnapp.co
               </a>
